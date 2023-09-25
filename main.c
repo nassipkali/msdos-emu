@@ -146,6 +146,19 @@ void get_current_path(Entry *current_directory, char *path) {
     }
 }
 
+// Function to clear the content of an Entry and its sub-entries
+void clear_entry(Entry *entry) {
+    if (entry->is_directory) {
+        for (int i = 0; i < entry->num_sub_entries; i++) {
+            clear_entry(entry->sub_entries[i]);
+            free(entry->sub_entries[i]);
+        }
+        entry->num_sub_entries = 0; // Clear the number of sub-entries
+    } else {
+        entry->content[0] = '\0'; // Clear file content
+    }
+}
+
 int main() {
     Entry *root = create_entry("", 1, "", NULL);
     Entry *current_directory = root;
@@ -184,7 +197,13 @@ int main() {
             } else {
                 printf("Файл с таким именем уже существует.\n");
             }
-        } else {
+        } else if (strcmp(command, "format") == 0) {
+            clear_entry(root);
+            root = create_entry("", 1, "", NULL);
+            current_directory = root;
+            printf("Ok\n");
+        }
+        else {
             printf("Неизвестная команда.\n");
         }
     }
