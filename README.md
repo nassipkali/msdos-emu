@@ -8,7 +8,7 @@ Run program:
 ./main test.disk
 ```
 
-Commands list:
+Commands list:\
 exit - exit from program\
 ls - list of directories\
 cd - change current dir of fs\
